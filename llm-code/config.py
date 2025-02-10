@@ -20,7 +20,7 @@ def parse_arguments():
     parser.add_argument("--epochs", type=int, default=1, help="指定训练轮数")
     parser.add_argument("--total_num_steps", type=int, default=100000, help="总训练步数")
     parser.add_argument("--gradient_accumulation_steps", type=int, default=1, help="梯度累积步数",)
-    parser.add_argument("--per_device_train_batch_size", type=int, default=16, help="Batch size")
+    parser.add_argument("--per_device_train_batch_size", type=int, default=1, help="Batch size")
     parser.add_argument("--max_length", type=int, default=1024, help="最大长度")
     parser.add_argument('--gradient_checkpointing', action='store_true', help='是否开启梯度检查点，默认不开启。开启可节省GPU内存占用')
     parser.add_argument("--log_steps", type=int, default=10, help="每隔多少步记录一次日志")

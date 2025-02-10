@@ -1,13 +1,14 @@
 # Pretrain模型训练
-deepspeed --num_nodes=1 --num_gpus=8 dxm_llm_main.py \
+deepspeed --num_nodes=1 --num_gpus=4 dxm_llm_main.py \
     --train_mode pretrain \
-    --model_name_or_path ./Llama-2-7b-hf \
-    --save_name model/model-pretrained \
-    --data_path data/FinCorpus_tokenized \
+    --model_name_or_path /home/congxiao/model/llama3_1b \
+    --save_name /home/congxiao/code/python/PROJ_MODEL/llama3/finetuned_model_llama3_1b \
+    --data_path /home/congxiao/dataset/github_verilog/llama3_save_dir \
     --epochs 1 \
-    --per_device_train_batch_size 4 \
-    --max_length 4096 \
-    --ds_zero_stage 2 \
+    --per_device_train_batch_size 1 \
+    --max_length 1024 \
+    --ds_zero_stage 3 \
     --log_steps 2 \
-    --save_steps 40 \
-    --gradient_checkpointing
+    --save_steps 10 \
+    --gradient_checkpointing \
+    --gradient_accumulation_steps 4 

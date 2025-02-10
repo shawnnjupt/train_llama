@@ -6,7 +6,7 @@ import math
 import glob
 import torch
 import os
-from transformers import HfArgumentParser, LlamaTokenizer
+from transformers import HfArgumentParser, AutoTokenizer
 
 # 禁止huggingface联网，加快加载本地数据集的速度
 os.environ['HF_DATASETS_OFFLINE'] = '1'
@@ -63,16 +63,22 @@ def concat_multiple_sample_fn(max_length, pad_token_id):
         }
     return concat_multiple_sample
 
+    # 获取目录下的所有json文件名
+    # filenames = glob.glob(f'{data_path}/*.json') + glob.glob(f'{data_path}/*.jsonl')
+    #set dataset
+    # raw_datasets = datasets.load_dataset(
+    #     "wikitext",
+    #     task_name,
+    # )
+    # print('raw_datasets=',raw_datasets)
 
 def tokenize_and_group_chunk(data_path, save_dir, tokenizer):
-    # 获取目录下的所有json文件名
-    filenames = glob.glob(f'{data_path}/*.json') + glob.glob(f'{data_path}/*.jsonl')
+
 
     print('\nStep1: load json dataset')
     # 第一步：加载数据集
     data = datasets.load_dataset(
-        "json",
-        data_files=filenames,  # 待加载的文件列表
+        data_path,  # 待加载的文件列表
         num_proc=data_args.num_proc,  # 并行加载的进程数
         cache_dir=data_args.cache_dir  # 数据集缓存的目录
     )['train']
@@ -105,7 +111,7 @@ def tokenize_and_group_chunk(data_path, save_dir, tokenizer):
 
 if __name__ == "__main__":
     # 加载tokenizer
-    tokenizer = LlamaTokenizer.from_pretrained(data_args.model_name_or_path)
+    tokenizer = AutoTokenizer.from_pretrained(data_args.model_name_or_path)
     tokenizer.add_eos_token = True
     tokenizer.pad_token = tokenizer.eos_token
 

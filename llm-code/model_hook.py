@@ -17,7 +17,7 @@ def get_tokenizer(args):
     '''
     # 对于llama系列模型使用LlamaTokenizer类
     if 'llama' in args.model_name_or_path.lower():
-        tokenizer = LlamaTokenizer.from_pretrained(args.model_name_or_path)
+        tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path)
     # 对于bloom系列模型使用BloomTokenizerFast类
     elif 'bloom' in args.model_name_or_path.lower():
         tokenizer = BloomTokenizerFast.from_pretrained(args.model_name_or_path)
@@ -39,7 +39,7 @@ def get_model_common(args):
 
     # 对于llama系列模型使用 LlamaForCausalLM 类
     if 'llama' in args.model_name_or_path.lower():
-        model = LlamaForCausalLM.from_pretrained(args.model_name_or_path)
+        model = AutoModelForCausalLM.from_pretrained(args.model_name_or_path)
     # 对于bloom系列模型使用 BloomForCausalLM 类
     elif 'bloom' in args.model_name_or_path.lower():
         model = BloomForCausalLM.from_pretrained(args.model_name_or_path)
